@@ -1,4 +1,7 @@
-var str = '<html><body><p>hello parse<br>my master<br></p></body></html>';//test
+var fs = require('fs');
+var str = fs.readFileSync('1.html').toString();
+str=str.replace(/\r\n/g,'')  
+str=str.replace(/\n/g,'');
 var identifier = ''
 var stack = [];
 flag = 0;
