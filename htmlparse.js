@@ -1,7 +1,8 @@
 var fs = require('fs');
-var str = fs.readFileSync('1.html').toString();
-str=str.replace(/\r\n/g,'')  
-str=str.replace(/\n/g,'');
+// var str = fs.readFileSync('1.html').toString();
+// str=str.replace(/\r\n/g,'')  
+// str=str.replace(/\n/g,'');
+str = '<html><body><div>hello world<br>admos<br></div><div><a href="http://www.baidu.com">click me</a></div></body></html>'
 var identifier = ''
 var stack = [];
 flag = 0;
