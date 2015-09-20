@@ -1,8 +1,9 @@
 var fs = require('fs');
-// var str = fs.readFileSync('1.html').toString();
-// str=str.replace(/\r\n/g,'')  
-// str=str.replace(/\n/g,'');
-str = '<html><body><div>hello world<br>admos<br></div><div><a href="http://www.baidu.com">click me</a></div></body></html>'
+function htmlparse(filename){
+var str = fs.readFileSync(filename).toString();
+str=str.replace(/\r\n/g,'')  
+str=str.replace(/\n/g,'');
+// str = '<html><body><div>hello world<br>admos<br></div><div><a href="http://www.baidu.com">click me</a></div></body></html>'
 var identifier = ''
 var stack = [];
 flag = 0;
@@ -23,7 +24,7 @@ str.split('').forEach(function(letter){
 	identifier+=letter;}
 }
 });
-console.log(domtreeStack);
+// console.log(domtreeStack);
 function identifierStrat(){
 	flag = 0;
 	if (textnode) {
@@ -44,3 +45,6 @@ stack.length = 0;
 domtreeStack.push(htmEle);
 return;
 }
+return domtreeStack;
+}
+exports.htmlparse=htmlparse;
