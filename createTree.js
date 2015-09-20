@@ -37,7 +37,7 @@ function removeWait(str) {
 	}
 	var segment = waitAnther.splice(length);
 	segment = segment.join('') + str;
-	flag ? tree.push(segment) : addArray() //flag=1  mean children otherwise brother
+	 tree.push(segment) : addArray() //flag=1  mean children otherwise brother
 		// console.log(flag+segment)
 	flag = 1;
 
