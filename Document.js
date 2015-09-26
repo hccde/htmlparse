@@ -1,7 +1,7 @@
 	var Node = require('./Node');
 	function Document (arguments) {
 		var nodeArguments = arguments.splice(0,11);//split para
-		Node.apply(this,nodeArguments);//inherit
+		Node.Node.call(this,nodeArguments);//inherit
 		this.implementation=arguments[0];
 		this.URL=arguments[1];
 		this.documentURL=arguments[2];
@@ -13,56 +13,56 @@
 		this.doctype=arguments[8];
 		this.documentElement=arguments[9];
 	}
-	Document.prototype = new Node([]);
-	Document.prototype.getElementsByTagName(str){
+	//Document.prototype = new Node.Node([]);
+	Document.prototype.getElementsByTagName=function(str){
 
 	}
-	Document.prototype.getElementsByTagNameNS(namespce,str){
+	Document.prototype.getElementsByTagNameNS=function(namespce,str){
 
 	}
-	Document.prototype.getElementsByClassName(''){
+	Document.prototype.getElementsByClassName=function(str){
 
 	}
-	Document.prototype.getElementById(''){
+	Document.prototype.getElementById=function(str){
 
 	}
-	Document.prototype.createElement(str){
+	Document.prototype.createElement =function(str){
 
 	}
-	Document.prototype.createElementNS(namespce,str){
+	Document.prototype.createElementNS=function(namespce,str){
 
 	}
-	Document.prototype.creteDocumentFragment(){
+	Document.prototype.creteDocumentFragment=function(some){
 
 	}
-	Document.prototype.createTextNode(data){
+	Document.prototype.createTextNode = function(data){
 
 	}
-	Document.prototype.createComment(data){
+	Document.prototype.createComment=function(data){
 
 	}
-	Document.prototype.createProcessingInstruction(target,data){
+	Document.prototype.createProcessingInstruction=function(target,data){
 
 	}
-	Document.prototype.importNode(node,boolean){
+	Document.prototype.importNode=function(node,boolean){
 
 	}
-	Document.prototype.adoptNode(node){
+	Document.prototype.adoptNode=function(node){
 
 	}
-	Document.prototype.createRange(){
+	Document.prototype.createRange=function(){
 
 	}
-	Document.prototype.createNodeIterator(root,whattoshow,filter){
+	Document.prototype.createNodeIterator=function(root,whattoshow,filter){
 
 	}
-	Document.prototype.createTreeWalk(root,whattoshow,filter){
+	Document.prototype.createTreeWalk=function(root,whattoshow,filter){
 
 	}
-	Document.prototype.prepend(node){
+	Document.prototype.prepend=function(node){
 
 	}
-	Document.prototype.append(){
+	Document.prototype.append=function(){
 
 	}
 	exports.Document=Document;

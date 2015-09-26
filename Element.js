@@ -1,7 +1,7 @@
 var Node = require('./Node');
 function Element(agruments){
 	var nodeAgruments = agruments.splice(0,11);
-	Node.apply(this,nodeAgruments);
+	Node.Node.call(this,nodeAgruments);
 	this.namespaceURI=agruments[0];
 	this.prefix = agruments[1]
 	this.localName = agruments[2];
