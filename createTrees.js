@@ -5,9 +5,9 @@ var Text = require('./Text');
 /******/
 //typeof stack is Array,we know tree's shape
 /******/
-var arrs = ['<!DOCTYPE html>','<html>', '<head>', 'hah', '</head>', '<p>', 'ha', '<centre>', '</m>', 'ko', '</centre>',
-	'</p>',
-	'</html>'
+var arrs = ['<!DOCTYPE html>','<html>', '<head>', 'hah', '</head>', '<p>', 'ha', '<centre>', '<strong>','ko','</strong>', '</centre>',
+	'</p>','<div>','mydiv','</div>',
+	'</html>',
 ];
 var pointer = [];
 var stack = [];
@@ -120,39 +120,48 @@ function createTrees(filename){
     function packageObject(arryorstring){
     	var obj;
     	if (typeof(arryorstring)=='string') {
-    		console.log(arryorstring)
+    		// console.log(arryorstring)
     		if (arryorstring[0]=='<'&&
     			arryorstring[arryorstring.length-1]=='>') 
     			{
-    				createCommonNode(arryorstring)//common node
+    				//createCommonNode(arryorstring)//common node
+    				console.log('Node>>>'+arryorstring)
     			}
     		else{
-    				createText(arryorstring)//text node
+    				//createText(arryorstring)//text node
+    				console.log('Text>>>'+arryorstring);
     		}
     	}
     	else{
     		//
-    		console.log(arryorstring);
-    		list.push()
+    		father=arryorstring;//array
+    		list.push(arryorstring)
     	}
     	return obj;
     }
 
     function dealRelation(col){
-		father.childNodes=collectObject;
+		father.childNodes=col;
     	//firstchild lastchild previous next
     	if(list.length){
-    		father=list.pop();
-    		expandArray(father.childNodes);
+    		father=list.shift();
+    		// expandArray(father.childNodes);
+    		expandArray(father);//debug
     	}
     	else
     	return;
     }
     function createCommonNode(str){
+    	var tagName = getEleName(str);
+
+    	return new Element.Element([1,tagName.toUpperCase(),'#document',
+    		url,father,father,'','','','','']);
 
     }
     function createText(str){
-
+    	return new Text.Text([3,'#text','#document',
+    		url,father,father,null,null,[],'','',str,
+    		str.length,str]);//third str ===the whole text
     }
 
     expandArray(collect);

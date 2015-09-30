@@ -13,7 +13,7 @@
 		this.NOTATION_NODE=12;
 		this.nodeType=arguments[0];
 		this.nodeName=arguments[1];
-		this.ownerDocumet=arguments[2];
+		this.ownerDocument=arguments[2];
 		this.baseURI=arguments[3];//webpage uri
 		this.parentNode=arguments[4];
 		this.parentElement=arguments[5];//only for IE
