@@ -6,7 +6,7 @@ var Attr = require('./Attr');
 /******/
 //typeof stack is Array,we know tree's shape
 /******/
-var arrs = ['<!DOCTYPE html>', '<html>', '<head>', 'hah', '</head>', '<p>', 'ha', '<centre>', '<strong>', 'ko', '</strong>', '</centre>',
+var arrs = ['<!DOCTYPE html>', '<html>', '<head>', 'hah', '</head>', '<p>', 'ha', '<centre>','test', '<strong>', 'ko', '</strong>', '</centre>',
 	'</p>', '<div>', 'mydiv', '</div>',
 	'</html>',
 ];
@@ -146,7 +146,6 @@ function createTrees(filename) {
 			if (arryorstring[0] == '<' &&
 				arryorstring[arryorstring.length - 1] == '>') {
 				obj = createCommonNode(arryorstring) //common node
-					// console.log('Node>>>'+arryorstring)
 			} else {
 				obj = createText(arryorstring) //text node
 					// console.log('Text>>>'+arryorstring);
@@ -155,29 +154,31 @@ function createTrees(filename) {
 			obj = packageList(arryorstring); //array
 			list.push(obj);
 		}
-		// console.log(obj);
 		return obj;
 	}
 
 	function dealRelation(col) {
+		// console.log(col.length+':'+'And father:'+father.nodeName)
+		// col.forEach(function(e){console.log(e.nodeName)});
 		if (father==documentnode) {
 			father.childNodes=[col[0]];
 			father.firstChild=col[0];
-			father.lastChild=[0];
-			father=col[0];
+			father.lastChild=col[0];
+			father=col.shift();
 		}
-		col.shift();
-		// console.log('>>>>>'+col);
 		father.childNodes = col;
+		if(col.length>1)
+		// console.log('father:'+father.nodeName+'\n'+'childNodes[1]:'+col[1].nodeName)
 		if (col.length !== 0) {
 		father.firstChild = col[0];
 		father.lastChild = col[col.length - 1];
 		if (col.length<2) {
 			col[0].nextSibling=null;
 			col[0].previousSibling=null;
-		}else {
+		}else if(col.length==2){
 			col[0].previousSibling=null;
-			col[col.length-1]=null;
+			col[col.length-1].nextSibling=null;
+		}else{
 			for(var j=1;j<col.length-1;j++){
 				if (col[j]) {
 					col[j].previousSibling=col[j-1];
@@ -186,7 +187,6 @@ function createTrees(filename) {
 			}
 		}
 
-		
 		col.forEach(function(e) {
 				if (!e) {return};
 				e.parentNode = e.parentElement = father;
@@ -197,7 +197,7 @@ function createTrees(filename) {
 			father = list.shift() ; //choose the first one as new father
 			expandArray(father.childNodes); //array
 			}else{
-				console.log(documentnode.childNodes[0].childNodes[1].childNodes[0].childNodes.length);
+				console.log(documentnode);//result
 			return;
 		}
 	}

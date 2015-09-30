@@ -17,6 +17,7 @@ function Element(arguments){
 	this.nextElementSibling=arguments[12];
 	this.childElementCount=arguments[13];
 }
+Element.prototype=new Node.Node([]);
 Element.prototype.getAttribute=function(str){
 
 }

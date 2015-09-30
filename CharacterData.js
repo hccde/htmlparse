@@ -1,8 +1,12 @@
+var Node=require('./Node');
 function CharacterData(arguments){
+	var nodeArguments=arguments.splice(0,11);
+	Node.Node.call(this,nodeArguments)
 	this.data=arguments[0];
 	this.length=arguments[1];
 
 }
+CharacterData.prototype=new Node.Node([]);
 CharacterData.prototype.substringData=function(offset,count){
 
 }

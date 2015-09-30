@@ -1,12 +1,10 @@
 var CharacterData = require('./CharacterData');
-var Node = require('./Node');
 function Text(arguments){
-	var NodeArguments = arguments.splice(0,11);
-	var CharacterArguments=arguments.splice(0,2);
-	CharacterData.CharacterData.apply(this,CharacterArguments);
-	Node.Node.apply(this,NodeArguments);
+	var CharacterArguments=arguments.splice(0,13);
+	CharacterData.CharacterData.call(this,CharacterArguments);
 	this.wholeText=arguments[0];//tem
 }
+Text.prototype=new CharacterData.CharacterData([]);
 Text.prototype.splitText=function(offset){
 
 }
