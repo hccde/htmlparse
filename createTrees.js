@@ -6,7 +6,8 @@ var Attr = require('./Attr');
 /******/
 //typeof stack is Array,we know tree's shape
 /******/
-var arrs = ['<!DOCTYPE html>', '<html>', '<head>', 'hah', '</head>', '<p>', 'ha', '<centre>','test', '<strong>', 'ko', '</strong>', '</centre>',
+var arrs = ['<!DOCTYPE html>', '<html>', '<head>', 'hah', '</head>','<style>','mystyle','</style>',
+ '<p>', 'ha', '<centre>','test', '<strong>', 'ko', '</strong>', '</centre>',
 	'</p>', '<div>', 'mydiv', '</div>',
 	'</html>',
 ];
@@ -35,17 +36,20 @@ function createArray(filename) {
 function type(str) {
 	var type;
 	type = 2;
+
 	str[0] && str[0] == '<' && str[str.length - 1] == '>' ? type = 0 : null;
 	str[0] == '<' && str[1] == '/' && str[str.length - 1] == '>' ? type = 1 : null;
 	if (type == 1) {
 		return isPair(pointer[pointer.length - 1][0], str);
 	}
+
 	return type;
 }
 
 function parent(str) {
 	var parent = [];
 	parent[0] = str;
+
 	if (stack.length == 1) {
 		stack.push(parent);
 	} else {
@@ -83,7 +87,9 @@ function getEleName(str) {
 	var id = void 0;
 	var classstyle = [];
 	var attributes={};
+
 	rough.forEach(function(e) {
+
 		if (e != ' ') {
 			var keyAndValue = e.split('=');
 			var key = trim(keyAndValue[0]).toLowerCase();
@@ -112,7 +118,6 @@ function getEleName(str) {
 	}
 
 }
-// exports.createTrees=
 function createTrees(filename) {
 	// var arrs =htmlparse.htmlparse('1.html');
 	stack = createArray(filename);
@@ -148,7 +153,6 @@ function createTrees(filename) {
 				obj = createCommonNode(arryorstring) //common node
 			} else {
 				obj = createText(arryorstring) //text node
-					// console.log('Text>>>'+arryorstring);
 			}
 		} else {
 			obj = packageList(arryorstring); //array
@@ -158,17 +162,14 @@ function createTrees(filename) {
 	}
 
 	function dealRelation(col) {
-		// console.log(col.length+':'+'And father:'+father.nodeName)
-		// col.forEach(function(e){console.log(e.nodeName)});
 		if (father==documentnode) {
 			father.childNodes=[col[0]];
 			father.firstChild=col[0];
 			father.lastChild=col[0];
 			father=col.shift();
 		}
+
 		father.childNodes = col;
-		if(col.length>1)
-		// console.log('father:'+father.nodeName+'\n'+'childNodes[1]:'+col[1].nodeName)
 		if (col.length !== 0) {
 		father.firstChild = col[0];
 		father.lastChild = col[col.length - 1];
@@ -192,14 +193,16 @@ function createTrees(filename) {
 				e.parentNode = e.parentElement = father;
 		});
 			//next loop
-	}			
+	}		
+
 		if (list.length!=0) {
 			father = list.shift() ; //choose the first one as new father
 			expandArray(father.childNodes); //array
 			}else{
-				console.log(documentnode);//result
+				console.log(documentnode.childNodes[0].childNodes[1].childNodes[0].nodeName);//result
 			return;
 		}
+
 	}
 
 	function packageList(arry) {
