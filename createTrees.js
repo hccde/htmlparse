@@ -3,14 +3,16 @@ var Document = require('./Document');
 var Element = require('./Element');
 var Text = require('./Text');
 var Attr = require('./Attr');
+var treeGrap = require('./treeGrap')
 /******/
 //typeof stack is Array,we know tree's shape
 /******/
-var arrs = ['<!DOCTYPE html>', '<html>', '<head>', 'hah', '</head>','<style>','mystyle','</style>',
- '<p>', 'ha', '<centre>','test', '<strong>', 'ko', '</strong>', '</centre>',
-	'</p>', '<div>', 'mydiv', '</div>',
-	'</html>',
-];
+// var arrs = ['<!DOCTYPE html>', '<html>', '<head>', 'hah', '</head>','<style>','mystyle','</style>',
+//  '<p>', 'ha', '<centre>','test', '<strong>', 'ko', '</strong>', '</centre>',
+// 	'</p>', '<div>', 'mydiv', '</div>',
+// 	'</html>',
+// ];
+var arrs=['<!DOCTYPE html>','<html>','<head src="www.baidu.com">','</head>','</html>'];
 var pointer = [];
 var stack = [];
 stack[0] = arrs[0];
@@ -87,21 +89,23 @@ function getEleName(str) {
 	var id = void 0;
 	var classstyle = [];
 	var attributes={};
-
+	var attr = {};
 	rough.forEach(function(e) {
 
 		if (e != ' ') {
 			var keyAndValue = e.split('=');
 			var key = trim(keyAndValue[0]).toLowerCase();
 			var value = trim(keyAndValue[1]).toLowerCase();
-			arrtibutes[key] = (new Attr.Attr([2, key, 'document', null, null,
-				null, null, null, [], null, null, null, null, name, name, value
+			attributes[key] = (new Attr.Attr([2, key, 'document', null, null,
+				null, null, null, [], null, null, '', '', name, name, value
 			]));
 			if (key == 'id') {
 				id = value;
 			} else if (key == 'class') {
 				classstyle.push(value);
 
+			}else{
+				attr[key]=value;
 			}
 		};
 	});
@@ -113,7 +117,8 @@ function getEleName(str) {
 		'name': name,
 		'id': id,
 		'attributes': attributes,
-		'classstyle': classstyle
+		'classstyle': classstyle,
+		'attr':attr
 
 	}
 
@@ -199,7 +204,7 @@ function createTrees(filename) {
 			father = list.shift() ; //choose the first one as new father
 			expandArray(father.childNodes); //array
 			}else{
-				console.log(documentnode.childNodes[0].childNodes[1].childNodes[0].nodeName);//result
+				// console.log(documentnode.childNodes[0].childNodes[0].nodeType);//result
 			return;
 		}
 
@@ -220,14 +225,20 @@ function createTrees(filename) {
 		var tagDetail = getEleName(str);
 		var tagName = tagDetail.name;
 		var idname = tagDetail.id;
-		var attributes = tagDetail.arrtibutes;
+		var attributes = tagDetail.attributes;
+		var attr = tagDetail.attr;
 		var classlist = tagDetail.classstyle;
-		return new Element.Element([1, tagName.toUpperCase(), '#document',
+		var elemt = new Element.Element([1, tagName.toUpperCase(), '#document',
 			url, father, father, null, null, [], null, null, 'namespace',
 			'prefix', tagName.toLowerCase(), tagName.toUpperCase(),
 			idname, classlist, attributes, [], null, null, null, null, null
 		]);
-
+		for(var i in attr){
+			if (attr.hasOwnProperty(i)) {
+			elemt[i]=attr[i]
+		}
+		}
+		return elemt;
 	}
 
 	function createText(str) {
